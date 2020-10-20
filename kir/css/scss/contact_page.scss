@@ -1,0 +1,89 @@
+#contacts-wrap {
+  .contacts-card-item {
+    width: 100%;
+    display: flex;
+    margin-top: 0.5rem;
+    background-color: #DCE6E8;
+
+    & > img {
+      max-width: 18.75rem;
+      width: 100%;
+      height: 18.75rem;
+    }
+
+    .text-container {
+      width: 100%;
+      display: flex;
+      align-items: flex-end;
+      padding: 2rem;
+      .text-wrap {
+        font-weight: 600;
+        bottom: 2rem;
+        left: 20.75rem;
+        padding-right: 2rem;
+        width: 100%;
+        & > p, & > a {
+          line-height: 1.5;
+          margin: 0;
+          margin-bottom: 0.2rem;
+          padding: 0;
+        }
+        & > a {
+          display: inline-block;
+          // color: #0645AD;
+          // &:visited {
+          //   color: #0B0080;
+          // }
+        }
+      }
+    }
+
+    &:not( :last-child ) {
+      .text-container {
+        .text-wrap {
+          & > p {
+            &:first-child {
+              font-size: 1.3rem;
+            }
+          }
+        }
+      }
+    }
+
+    &:last-child {
+      .text-container {
+        .text-wrap {
+          & > p {
+            &:first-child {
+              width: 50%;
+            }
+          }
+        }
+      }
+    }
+
+  }
+}
+
+.social-container {
+  display: flex;
+  margin-top: 0.5rem;
+  .social-item {
+    border-radius: 0.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: block;
+    margin-right: 0.7rem;
+    box-shadow: 0 0 transparent;
+    transition: all 0.15s linear;
+    &:hover {
+      box-shadow: 0 0 0.5rem #333;
+    }
+    & > img {
+      width: 100%;
+      height: 100%;
+      border: 0 solid transparent;
+      border-radius: 0.3rem;
+    }
+  }
+}

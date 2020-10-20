@@ -1,0 +1,65 @@
+<div id="news-popup" class="overlay">
+	<div class="wrap">
+		<a href="#" class="close">&times;</a>
+		<form id="news">
+			<h2>Подпишитесь на нашу рассылку</h2>
+			<label>
+				Имя:<br>
+				<input name="name">
+			</label>
+			<label>
+				Email*:<br>
+				<input type="email" name="email" required>
+			</label>
+			<div>
+				<input type="submit" value="Да">
+				<input type="button" class="close" value="Нет">
+			</div>
+		</form>
+	</div>
+</div>
+<script>
+	var nForm = document.getElementById('news');
+	var now = new Date();
+	if (!localStorage) {
+		getDate = function(){
+			return Cookies.get('newsDate');
+		};
+		setDate = function(value){
+			return Cookies.set('newsDate', value);
+		};
+		getSubbed = function(){
+			return Cookies.get('news');
+		};
+		setSubbed = function(value){
+			return Cookies.set('news', value);
+		};
+	}
+	var before = getDate();
+	var news = getSubbed();
+	if (!news && !before || now - (new Date(before)) > 24*60*60*1e3) {
+		openPopup(null, 'news-popup', function () {
+			setDate(now);
+		});
+		nForm.addEventListener('submit', function (e){
+			e.preventDefault();
+			var fd = new FormData(nForm);
+			fd.append('news-key', new Date().toJSON());
+			axios.post('/news.php?test=1', fd, {
+				headers: {
+					'X-Requested-With': 'KIR-Axios'
+				}
+			})
+			.then(function (response) {
+				// console.log(response);
+			})
+			.catch(function (error) {
+				// console.log(error);
+			})
+			.finally(function (all) {
+				// console.log(all);
+				setSubbed(true);
+			});
+		});
+	}
+</script>

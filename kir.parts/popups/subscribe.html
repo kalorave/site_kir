@@ -1,0 +1,78 @@
+<div id="subscribe" class="overlay">
+	<script>
+		function setSum(event){
+			var sum = 3120;
+			var input = document.getElementById("sum");
+			var count = document.getElementById("count");
+			var value = count.value;
+			if (event.target.id === "pdf-version" || event.target.id === "count") {
+				count.value = (Number.isInteger(Number(value)) && value < 100 && value > 0) ? value : 1;
+				sum = 100 * count.value;
+			}
+			input.value = sum;
+			document.getElementById("product").value = 'Оплатить подписку (' + sum + ' ₽)';
+		}
+	</script>
+	<div class="wrap">
+		<a href="#" class="close">&times;</a>
+		<div>
+			<h2>Подписка</h2>
+		</div>
+		<div class="red-link">
+			Если вы хотите распечатать бланк для оплаты подписки через банк,
+			<a href="/pdf/coupon.pdf" target="_blank">нажмите сюда</a>.<br>
+			Если вы хотите оплатить подписку электронными деньгами или банковской картой
+			<svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+				<path fill="#333" d="m5 7c-2.75 0-5 2.25-5 5v26c0 2.75 2.25 5 5 5h40c2.75 0 5-2.25 5-5v-26c0-2.75-2.25-5-5-5zm0 2h40c1.67 0 3 1.33 3 3v26c0 1.67-1.33 3-3 3h-40c-1.67 0-3-1.33-3-3v-26c0-1.67 1.33-3 3-3zm12 4c-6.62 0-12 5.38-12 12 0 6.62 5.38 12 12 12 3.08 0 5.88-1.18 8-3.09 2.12 1.91 4.93 3.09 8 3.09 6.62 0 12-5.38 12-12 0-6.62-5.38-12-12-12-3.07 0-5.88 1.18-8 3.09-2.12-1.91-4.92-3.09-8-3.09zm16 2c5.54 0 10 4.46 10 10s-4.46 10-10 10c-2.55 0-4.89-.934-6.66-2.5 1.65-2.06 2.66-4.66 2.66-7.5s-1-5.44-2.66-7.5c1.77-1.57 4.11-2.5 6.66-2.5z"/>
+			</svg>
+			<svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+				<path fill="#333" d="m5 7c-2.75 0-5 2.25-5 5v26c0 2.75 2.25 5 5 5h40c2.75 0 5-2.25 5-5v-26c0-2.75-2.25-5-5-5zm0 2h40c1.67 0 3 1.33 3 3v26c0 1.67-1.33 3-3 3h-40c-1.67 0-3-1.33-3-3v-26c0-1.67 1.33-3 3-3zm24.7 10.4c-3.1 0-4.69 1.53-4.69 3.47 0 3.51 4.06 3.04 4.06 4.84 0 .305-.234 1.03-1.94 1.03-1.71 0-2.81-.656-2.81-.656l-.531 2.38s1.11.625 3.22.625 5.03-1.62 5.03-3.97c0-2.83-4.06-3.05-4.06-4.31 0-.645.5-1.12 1.97-1.12.953 0 2.03.719 2.03.719l.5-2.44s-1.42-.562-2.78-.562zm-13.2.219l-2.69 7.94s-.184-.676-.25-1.09c-1.54-3.45-4.03-4.72-4.03-4.72l2.38 9h3.25l4.5-11.1zm4.31 0l-1.75 11.1h2.97l1.78-11.1zm16 0l-4.84 11.1h2.94l.594-1.59h3.69l.312 1.59h2.69l-2.28-11.1zm-30.6.0312s5.8 1.8 7.16 6.16l-1-5.06s-.43-1.09-1.59-1.09zm31.7 3.19l.812 4.19h-2.44z"/>
+			</svg>
+			заполните форму ниже.
+		</div>
+		<input id="print-version" type="radio" name="subscribe" value="print" onchange="setSum(event)" checked>
+		<input id="pdf-version" type="radio" name="subscribe" value="pdf" onchange="setSum(event)">
+		<div>
+			Оформить подписку на <label for="print-version">печатное издание</label>
+			или <label for="pdf-version">электронную версию с 2000 по 2020 гг</label>
+		</div>
+		<div class="print-version">Стоимость годовой подписки на 6 номеров журнала: 3120 &#8381;</div>
+		<div class="pdf-version">Стоимость подписки на 1 номер журнала: 100 &#8381;</div>
+		<form action="https://money.yandex.ru/eshop.xml" method="post">
+			<input name="shopId" value="158760" type="hidden">
+			<input name="scid" value="152097" type="hidden">
+			<input id="sum" name="sum" value="3120" type="hidden">
+			<label class="pdf-version">
+				Количество номеров:<br>
+				<input id="count" value="1" type="number" onkeypress="setSum(event)" onmouseup="setSum(event)" onchange="setSum(event)" min="1" step="1" max="99">
+			</label>
+			<label>
+				Телефон<span style="color:red">*</span>:<br>
+				<input required name="customerNumber">
+			</label>
+			<label>
+				Имя покупателя:<br>
+				<input name="custName">
+			</label>
+			<label>
+				Адрес доставки:<br>
+				<input name="custAddr">
+			</label>
+			<label>
+				Email:<br>
+				<input type="email" name="custEmail">
+			</label>
+			<label>
+				Комментарии к заказу:<br>
+				<textarea name="orderDetails" rows="2" wrap="soft"></textarea>
+			</label>
+			<input id="product" type="submit" value="Оплатить подписку (3120 &#8381;)">
+		</form>
+		<div class="blue-link">
+			ВНИМАНИЕ! Все цены действительны для подписчиков, находящихся на территории РФ.
+			Доставка осуществляется только по территории РФ.<br>
+			<br>
+			Контакты отдела подписки: <a href="tel:+78123363867" target="_blank">+7(812)336-3867</a>, <a href="mailto:titan@aaex.ru" target="_blank">titan@aaex.ru</a>
+		</div>
+	</div>
+</div>

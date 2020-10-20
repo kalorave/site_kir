@@ -1,0 +1,117 @@
+<style>
+  #category{
+    display: flex;
+    flex-wrap: wrap;
+  }
+  #category{
+  	font-size: 0.875rem;
+  	justify-content:flex-start;
+  }
+  #category .cell{
+    display: flex;
+    flex-flow: column;
+  }
+  #category .data{
+    border: 0.0625rem solid #888;
+    border-top: 0;
+    padding: 1rem;
+    min-height: 7rem;
+    text-align: center;
+    flex-grow: 1;
+  }
+  .data h4{
+  	margin-top: 0;
+  	margin-bottom: 0;
+  }
+  .data p{
+  	margin-top: 0.25rem;
+  	margin-bottom: 0.25rem;
+  }
+  .data p:last-child{
+  	margin-bottom: 0;
+  }
+</style>
+<h2 id="head"></h2>
+<div id="category"></div>
+<a href="../" class="home" title="Вернуться к каталогу">К каталогу</a>
+<div id="popup-wrap">
+	<div id="popup" class="wrap">
+		<img id="pop-image" alt="">
+		<div id="description">
+			<a id="pop-close" href="#">&times;</a>
+			<h4 id="pop-h4"></h4>
+			<p id="pop-desc"></p>
+			<p id="pop-price" class="red-link"></p>
+			<a id="pop-link"></a>
+			<p id="pop-phone"></p>
+		</div>
+	</div>
+</div>
+<script>
+function open(e){
+	var that = category.items[e.target.dataset.id];
+	document.getElementById("pop-image").src = that.back;
+	document.getElementById("pop-h4").innerHTML = that.head;
+	document.getElementById("pop-desc").innerHTML = that.desc ? that.desc : "";
+	document.getElementById("pop-price").innerHTML = that.price;
+	document.getElementById("pop-link").innerHTML = that.company;
+	document.getElementById("pop-link").href = that.href;
+	document.getElementById("pop-phone").innerHTML = that.phone;
+	document.body.classList.add("poped");
+}
+function close(e){
+	e.preventDefault();
+	document.body.classList.remove("poped");
+}
+function miss(e){
+	e.stopPropagation();
+	e.stopImmediatePropagation();
+}
+function buildContent() {
+  document.getElementById("head").innerHTML = category.h2.text;
+  document.getElementById("head").classList.add(category.h2.color);
+  document.getElementById("popup-wrap").addEventListener("click", close);
+  document.getElementById("pop-close").addEventListener("click", close);
+  document.getElementById("popup").addEventListener("click", miss);
+  var content = document.getElementById("category");
+  for (i = 0; i < category.items.length; i++) {
+  	var that = category.items[i];
+  	var wrap = document.createElement("div");
+  	wrap.classList.add("cell", "c-" + (that.size ? that.size : 1));
+  	link = document.createElement("a");
+  	link.href = "#";
+  	link.title = "Подробнее";
+  	link.onclick = open;
+  	img = document.createElement("div");
+  	img.classList.add("back");
+  	img.dataset.id = i;
+  	img.alt = "";
+  	img.style.backgroundImage = "url('{0}')".format(that.preview);
+  	link.appendChild(img);
+  	wrap.appendChild(link);
+  	var wrap2 = document.createElement("div");
+  	wrap2.classList.add("data");
+  	child = document.createElement("h4");
+  	child.appendChild(document.createTextNode(that.head));
+  	wrap2.appendChild(child);
+  	if(that.desc){
+  		child = document.createElement("p");
+  		child.appendChild(document.createTextNode(that.desc));
+  		wrap2.appendChild(child);
+  	}
+  	child = document.createElement("p");
+  	child.classList.add("red-link");
+  	child.appendChild(document.createTextNode(that.price));
+  	wrap2.appendChild(child);
+  	link = document.createElement("a");
+  	link.href = that.href;
+  	link.appendChild(document.createTextNode(that.company));
+  	wrap2.appendChild(link);
+  	child = document.createElement("p");
+  	child.appendChild(document.createTextNode(that.phone));
+  	wrap2.appendChild(child);
+  	wrap.appendChild(wrap2);
+  	content.appendChild(wrap);
+  }
+}
+</script>

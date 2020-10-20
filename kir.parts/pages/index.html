@@ -1,0 +1,22 @@
+<style>
+  #index{
+    display: flex;
+    flex-wrap: wrap;
+  }
+</style>
+<div id="index"></div>
+<script>
+  function buildContent() {
+    var content = document.getElementById("index");
+    for (var i = 0; i < main.length; i++) {
+      var link = document.createElement("div");
+      link.classList.add('cell');
+      if (main[i].size){
+        link.classList.add('c-' + main[i].size);
+      }
+      link.innerHTML = "<a href='{0}' class='{1}'><div class='back' style='background-image:url({2})'></div><span class='text'><span>{3}</span></span></a>"
+      .format(main[i].href, main[i].color, main[i].src, main[i].text);
+      content.appendChild(link);
+    }
+  }
+</script>

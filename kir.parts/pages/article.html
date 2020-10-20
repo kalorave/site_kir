@@ -1,0 +1,272 @@
+<style>
+	#content{
+		padding-right: 0.25rem;
+		padding-left: 0.25rem;
+	}
+	#article{
+		display: flex;
+		flex-flow: column;
+	}
+	#header{
+		line-height: 0;
+		position: relative;
+		padding-top: 28rem;
+		overflow: hidden;
+		margin-bottom: 0.5rem;
+	}
+	#article #header img{
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		height: 100%;
+		width: auto;
+	}
+	#article .head p{
+		margin-top: 0;
+	}
+	#article h1{
+		line-height: normal;
+		position: absolute;
+		color: #fff;
+		font-size: 2rem;
+		margin: 1rem;
+		bottom: 0;
+		left:0;
+		text-shadow: 0 0 0.5rem #333, 0 0 1rem #333;
+	}
+	#article p{
+		text-align: justify;
+		padding: 0 1rem;
+	}
+	#article p+p{
+		margin-top: 0.5rem;
+	}
+	.info{
+		float: right;
+		margin-right: 1rem;
+		margin-bottom: 1.5rem;
+		margin-left: 1.5rem;
+		padding: 1rem;
+		text-align: center;
+		border: 0.0625rem solid #ddd;
+		max-width: 40%;
+	}
+	.info.left{
+		float: left;
+		margin-right: 1.5rem;
+		margin-left: 1rem;
+	}
+	.info.none{
+		border: 0;
+		float: none;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	.info a{
+		color: #090;
+	}
+	#article .info img{
+		width: auto;
+		max-width: 60%;
+		max-height: 200px;
+	}
+	#article .info.left img{
+		width: auto;
+		max-width: 100%;
+		max-height: 300px;
+	}
+	#article h2{
+		margin: 2rem 1rem 1rem 2.5rem;
+		/* text-align: justify; */
+	}
+	#article img{
+		width: 100%;
+		height: auto;
+	}
+	#article .img-wrap{
+		margin-top: 0;
+		line-height: 0;
+	}
+	.img-wrap img{
+		margin-top: 1.5625%;
+	}
+	i#end{
+		display: inline-block;
+		content: '';
+		width: 1rem;
+		height: 1rem;
+		background-color: #bd1d3f;
+	}
+	#head2{
+		margin-bottom: 0.919%;
+	}
+	#head2 h2{
+		margin-top: 3.934%;
+		margin-bottom: 0;
+		text-align: center;
+	}
+	#head2 h2.color{
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+	#grid-end{
+		display:flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+	}
+	#article ~ #col-r #grid > *, #article ~ #col-r #grid-end > *{
+		margin-bottom: 0.656%;
+	}
+	#article ~ #col-r .cell-1{
+		width: 32.896%;
+	}
+	#article ~ #col-r .cell-1 .back{
+		margin-bottom: 1.993%
+	}
+	#article ~ #col-r .cell-1 .text-wrap{
+		margin-top: 1.993%
+	}
+	#article .body a {
+		color: blue;
+	}
+	#article .body a:hover,
+	#article .body a:focus {
+		text-decoration: underline;
+	}
+	#article .body a:active {
+		color: darkblue;
+	}
+	@media (max-width:577px){
+		#content {
+    	width: 100%;
+    }
+	}
+</style>
+<div
+ 	id="article"
+	itemscope=""
+	itemtype="http://schema.org/Article"
+></div>
+<script>
+	function makeH2(h2, root) {
+		if (h2) {
+			root.innerHTML = "<h2>{0}</h2>".format(h2);
+		}
+	}
+	function makeInfo(info, root){
+		if (info) {
+			var code = "<img src='{0}' alt='logo'><div>{1}</div><div>{2}</div>"
+			.format(info.img, info.name, info.address);
+			if (info.link) {
+				code += "<div><a href='//{0}' target='_blank'>{0}</a></div>"
+				.format(info.href);
+			}
+			if (info.mail) {
+				code += "<div><a href='mailto:{0}' target='_blank'>{0}</a></div>"
+				.format(info.mail);
+			}
+			if (info.tel) {
+				code += "<div><a href='tel:{0}' target='_blank'>{0}</a></div>"
+				.format(info.tel);
+			}
+			var node = document.createElement("div");
+			node.classList.add("info", info.left ? "left" : "");
+			node.innerHTML = code;
+			root.appendChild(node);
+		}
+	}
+	function makeP(p, root) {
+		if (p && p.length) {
+			for (var i = 0; i < p.length; i++) {
+				var node = document.createElement("p");
+				node.innerHTML = p[i];
+				root.appendChild(node);
+			}
+		}
+	}
+	function makeImg(img, root) {
+		if (img && img.length) {
+			var node = document.createElement("div");
+			node.classList.add("img-wrap");
+			var code = '';
+			for (var i = 0; i < img.length; i++) {
+				code += (img[i] instanceof Object)
+				 	? '<a href="{0}"><img src="{1}" alt=""></a>'.format(img[i].href, img[i].src)
+					: '<img src="{0}" alt="">'.format(img[i])
+			}
+			node.innerHTML = code;
+			root.appendChild(node);
+		}
+	}
+	function makeLogo(logo, root){
+		if (logo) {
+			var node = document.createElement("div");
+			node.classList.add("info", "none");
+			node.innerHTML = '<a href="//{0}" target="_blank"><img src="{1}" alt="logo"></a>'
+				.format(logo.href, logo.img);
+			root.appendChild(node);
+		}
+	}
+	function makeSquare(root){
+		var pars = root.getElementsByTagName("p");
+		if (pars.length) {
+			pars = pars[pars.length-1];
+			var node = document.createElement("i");
+			node.id = "end";
+			pars.appendChild(node);
+		}
+	}
+	function buildContent() {
+		var aBody = document.createElement("div");
+		aBody.classList.add("body");
+		aBody.setAttribute("itemprop", "articleBody");
+		if (article.header) {
+			var aHead = document.createElement("div");
+			aHead.classList.add("head");
+			var node = document.createElement("div");
+			node.id = "header";
+			node.innerHTML = "<img itemprop='image' src='{0}' alt='photo'><h1 itemprop='headline name'>{1}</h1>"
+			.format(article.header.img, article.header.h1);
+			aHead.appendChild(node);
+			makeInfo(article.header.info, aHead);
+			makeP(article.header.p, aHead);
+			aBody.appendChild(aHead);
+		}
+		if (article.sections) {
+			for (var i = 0; i < article.sections.length; i++) {
+				var section = article.sections[i];
+				var node = document.createElement("div");
+				makeH2(section.h2, node);
+				makeInfo(section.info, node);
+				makeP(section.p, node);
+				makeImg(section.img, node);
+				aBody.appendChild(node);
+			}
+		}
+		makeLogo(article.logo, aBody);
+		makeSquare(aBody);
+		var a = document.getElementById("article");
+		a.appendChild(aBody);
+		var node = document.createElement("div");
+		node.style.textAlign = 'right';
+		node.innerHTML = '<a href="/" class="home" title="Вернуться на главную">На главную</a>';
+		a.appendChild(node);
+		var node = document.createElement("div");
+		node.style.display = 'flex';
+		node.style.flexWrap = 'wrap';
+		node.style.justifyContent = 'center';
+		node.style.marginLeft = '-0.25rem';
+		node.style.marginRight = '-0.25rem';
+		for (var i = 0; i < article.links.length; i++) {
+      var link = document.createElement("div");
+      link.classList.add('cell');
+      if (article.links[i].size){
+        link.classList.add('c-' + article.links[i].size);
+      }
+      link.innerHTML = "<a href='{0}' class='{1}'><div class='back' style='background-image:url({2})'></div><span class='text'><span>{3}</span></span></a>"
+      .format(article.links[i].href, article.links[i].color, article.links[i].back, article.links[i].text);
+      node.appendChild(link);
+    }
+		a.appendChild(node);
+	}
+</script>

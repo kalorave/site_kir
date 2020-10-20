@@ -1,0 +1,123 @@
+<style>
+	#content{
+		padding-right: 0.25rem;
+		padding-left: 0.25rem;
+		width: 100%;
+	}
+	#content h2{
+		margin: 0;
+	}
+</style>
+<h2 id="head"></h2>
+<div id="contacts-wrap"></div>
+<a href="/" class="home" title="Вернуться на главную">На главную</a>
+<script>
+	function buildContent() {
+
+		//build content
+
+		var header = document.getElementById("head");
+		header.innerHTML = contact.h2.text;
+		header.classList.add(contact.h2.color);
+
+		buildCards();
+
+		setTimeout(function () {
+	    var hash = document.getElementById(location.hash.slice(1));
+	    if (hash) {
+				var logo = document.getElementById("logo")
+	      window.scrollTo(0, hash.offsetTop + content.offsetTop - logo.clientHeight);
+	    }
+	  }, 500);
+
+		// service functions
+
+		function buildCards() {
+			var content = document.getElementById("contacts-wrap");
+
+			for (var i = 0; i < contact.cards.length; i++) {
+
+				var card = document.createElement('div');
+				var textWrap = document.createElement('div');
+				var textContainer = document.createElement('div');
+				var img = document.createElement('img');
+
+				img.src = contact.cards[i].logo;
+
+				if (i < contact.cards.length - 1) {
+
+					appendTextItem(contact.cards[i].name, textWrap);
+					appendTextItem(contact.cards[i].position, textWrap);
+					appendLinkItem(contact.cards[i].contacts.email, textWrap, 'mail');
+
+				} else {
+
+					var social = document.createElement('div');
+					social.classList.add('social-container');
+
+					appendTextItem(contact.cards[i].address, textWrap);
+					appendLinkItem(contact.cards[i].contacts.phone.link, textWrap, 'tel', contact.cards[i].contacts.phone.text);
+					appendLinkItem(contact.cards[i].info.regСertificate.link, textWrap, 'download', contact.cards[i].info.regСertificate.text);
+					appendLinkItem(contact.cards[i].info.conditionsOfUse.link, textWrap, 'download', contact.cards[i].info.conditionsOfUse.text);
+
+					for (var j = 0; j < contact.cards[i].contacts.social.length; j++) {
+
+						var socialLink = document.createElement('a');
+						socialLink.href = contact.cards[i].contacts.social[j].link;
+						socialLink.classList.add('social-item');
+
+						var socialImg = document.createElement('img');
+						socialImg.src = contact.cards[i].contacts.social[j].icon;
+
+						socialLink.appendChild(socialImg);
+						social.appendChild(socialLink);
+
+					}
+
+					textWrap.appendChild(social);
+				}
+
+				textContainer.classList.add('text-container');
+				textWrap.classList.add('text-wrap');
+				card.classList.add('contacts-card-item');
+
+				textContainer.appendChild(textWrap);
+
+				card.appendChild(img);
+				card.appendChild(textContainer);
+
+				content.appendChild(card);
+
+			}
+		}
+
+		function appendTextItem(val, parrent) {
+			var textItem;
+
+			textItem = document.createElement('p');
+			textItem.appendChild(document.createTextNode(val));
+			parrent.appendChild(textItem);
+		}
+
+		function appendLinkItem(link, parrent, type, text) {
+			var textItem = document.createElement('a');
+
+			if (type === 'mail') {
+				textItem.href = 'mailto:' + link;
+			} else if (type === 'tel') {
+				textItem.href = 'tel:' + link;
+			} else {
+				textItem.href = link;
+			}
+
+			if (text) {
+				textItem.appendChild(document.createTextNode(text));
+			} else {
+				textItem.appendChild(document.createTextNode(link));
+			}
+
+			parrent.appendChild(textItem);
+		}
+
+	}
+</script>

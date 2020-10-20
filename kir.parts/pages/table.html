@@ -1,0 +1,55 @@
+<style>
+	#content{
+		padding-right: 0.25rem;
+		padding-left: 0.25rem;
+	}
+	#content h2{
+		margin: 0;
+	}
+	#table{
+		border-collapse: collapse;
+		border-spacing: 0;
+		border-color: transparent;
+		border-right: 0.0625rem solid #ccc;
+		border-bottom: 0.0625rem solid #ccc;
+		border-left: 0.0625rem solid #ccc;
+		width: 100%;
+	}
+	#table td{
+		padding: 1rem;
+	}
+	#table tr:nth-child(2n){
+		background-color:rgba(2, 106, 124, 0.1);
+	}
+	#table td.logo{
+		text-align: center;
+	}
+	#table td img{
+		max-width: 10rem;
+		height: auto;
+	}
+	#table td.desc{
+		text-align: justify;
+	}
+</style>
+<h2 id="head"></h2>
+<table id="table"></table>
+<a href="/" class="home" title="Вернуться на главную">На главную</a>
+<script>
+	function buildContent() {
+		var header = document.getElementById("head");
+		header.innerHTML = table.h2.text;
+		header.classList.add(table.h2.color);
+		var content = document.getElementById("table");
+		for (i = 0; i < table.rows.length; i++) {
+			buildRow(table.rows[i], content);
+		}
+		setTimeout(function () {
+	    var hash = document.getElementById(location.hash.slice(1));
+	    if (hash) {
+				var logo = document.getElementById("logo")
+	      window.scrollTo(0, hash.offsetTop + content.offsetTop - logo.clientHeight);
+	    }
+	  }, 500);
+	}
+</script>

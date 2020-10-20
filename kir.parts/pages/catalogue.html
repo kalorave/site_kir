@@ -1,0 +1,33 @@
+<style>
+  #content{
+  	width:100%;
+    flex-grow: 1;
+  }
+  /* #content{
+    display: block;
+    padding-right: 0;
+    padding-left: 0;
+  } */
+  #categories{
+    display: flex;
+    flex-wrap: wrap;
+  }
+</style>
+<div id="categories"></div>
+<script>
+  function buildContent() {
+    var content = document.getElementById("categories");
+    for (var i = 0; i < catalogue.length; i++) {
+      link = document.createElement("div");
+      link.classList.add('cell');
+      // link.classList.add('cell', 'c-' + (catalogue[i].size ? catalogue[i].size : 1));
+      link.innerHTML = "<a href='{0}'><div class='back' style='background-image:url({1})'></div></a>"
+        .format(catalogue[i].href, catalogue[i].src);
+      content.appendChild(link);
+    }
+    var node = document.createElement("div");
+    node.style.textAlign = 'right';
+    node.innerHTML = '<a href="/" class="home" title="Вернуться на главную">На главную</a>';
+    content.appendChild(node);
+  }
+</script>
