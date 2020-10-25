@@ -40,9 +40,19 @@
 				var card = document.createElement('div');
 				var textWrap = document.createElement('div');
 				var textContainer = document.createElement('div');
-				var img = document.createElement('img');
+				var imgWrap = document.createElement('div');
+				var img = document.createElement('div');
 
-				img.src = contact.cards[i].logo;
+        imgWrap.style.width = '100%';
+        imgWrap.style.maxWidth = '280px';
+
+				img.style.backgroundImage = 'url("' + contact.cards[i].logo + '")';
+				img.style.backgroundSize = 'cover';
+				img.style.backgroundRepeat = 'no-repeat';
+				img.style.backgroundPosition = 'center';
+				img.style.backgroundColor = '#fff';
+				img.style.padding = '100% 0 0 0';
+				
 
 				if (i < contact.cards.length - 1) {
 
@@ -57,7 +67,8 @@
 
 					appendTextItem(contact.cards[i].address, textWrap);
 					appendLinkItem(contact.cards[i].contacts.phone.link, textWrap, 'tel', contact.cards[i].contacts.phone.text);
-					appendLinkItem(contact.cards[i].info.regСertificate.link, textWrap, 'download', contact.cards[i].info.regСertificate.text);
+					textWrap.appendChild(document.createElement('br'));
+  				appendTextItem(contact.cards[i].info.regСertificate.text, textWrap);
 					appendLinkItem(contact.cards[i].info.conditionsOfUse.link, textWrap, 'download', contact.cards[i].info.conditionsOfUse.text);
 
 					for (var j = 0; j < contact.cards[i].contacts.social.length; j++) {
@@ -83,7 +94,8 @@
 
 				textContainer.appendChild(textWrap);
 
-				card.appendChild(img);
+        imgWrap.appendChild(img);
+				card.appendChild(imgWrap);
 				card.appendChild(textContainer);
 
 				content.appendChild(card);

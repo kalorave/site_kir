@@ -469,7 +469,7 @@ a.home:hover {
   width: 100%;
   display: flex;
   align-items: flex-end;
-  padding: 2rem;
+  padding: 1rem;
 }
 
 #contacts-wrap .contacts-card-item .text-container .text-wrap {
@@ -481,7 +481,7 @@ a.home:hover {
 }
 
 #contacts-wrap .contacts-card-item .text-container .text-wrap > p, #contacts-wrap .contacts-card-item .text-container .text-wrap > a {
-  line-height: 1.5;
+  line-height: 1.2;
   margin: 0;
   margin-bottom: 0.2rem;
   padding: 0;
