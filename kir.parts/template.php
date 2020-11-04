@@ -129,7 +129,7 @@ $root = in_array(
 					(function(w,d,c){var s=d.createElement('script'),h=d.getElementsByTagName('script')[0],e=d.documentElement;if((' '+e.className+' ').indexOf(' ya-page_js_yes ')===-1){e.className+=' ya-page_js_yes';}s.type='text/javascript';s.async=true;s.charset='utf-8';s.src=(d.location.protocol==='https:'?'https:':'http:')+'//site.yandex.net/v2.0/js/all.js';h.parentNode.insertBefore(s,h);(w[c]||(w[c]=[])).push(function(){Ya.Site.Form.init()})})(window,document,'yandex_site_callbacks');
 				</script>
 			</div>
-			<div class="mobile-menu">
+			<div class="mobile-menu-container">
 				<div class="open-btn">
 					<a class="icon-wrap">
 						<span></span>
@@ -152,14 +152,16 @@ $root = in_array(
 							<input type="submit" value="Поиск"/>
 						</form>
 					</div>
-					<nav id="nav2"></nav>
-					<div id="sidelist2"></div>
+					<div id="mobile-menu">
+						<nav id="mobile-nav"></nav>
+						<div id="mobile-sidelist"></div>
+					</div>
 				</div>
 			</div>
 			<script>
 				(function() {
-					document.querySelectorAll('.mobile-menu .open-btn')[0].onclick = function() {
-						document.querySelectorAll('.mobile-menu')[0].classList.toggle('active');
+					document.querySelectorAll('.mobile-menu-container .open-btn')[0].onclick = function() {
+						document.querySelectorAll('.mobile-menu-container')[0].classList.toggle('active');
 						document.querySelectorAll('html')[0].classList.toggle('hidden');
 					};
 				})()
@@ -167,9 +169,9 @@ $root = in_array(
 		</div>
 	</header>
 	<div class="wrap main-content">
-		<aside id="menu" class="cell">
-			<nav id="nav"></nav>
-			<div id="sidelist"></div>
+		<aside id="aside-menu" class="cell">
+			<nav id="aside-nav"></nav>
+			<div id="aside-sidelist"></div>
 		</aside>
 		<div id="content">
 		<?php
@@ -182,61 +184,78 @@ $root = in_array(
 	<link rel="stylesheet" href="/css/mainv4.css">
 	<script>
 
-	var nav = document.getElementById("nav");
+	// aside menu
+	buildNavArticle(document.getElementById('aside-nav'));
+	buildNavMenu(document.getElementById('aside-nav'));
+	buildIssues(document.getElementById('aside-nav'));
+	buildBanners(document.getElementById('aside-sidelist'));
+	buildBannerSite(document.getElementById('aside-sidelist'));
 
-	for (var i = 0; i < side.issues.length; i++) {
-		link = document.createElement("a");
-		link.href = side.issues[i].href;
-		link.style.backgroundImage = 'url("' + side.issues[i].back + '")';
-		link.target = "_blank";
-		nav.parentNode.insertBefore(link, nav);
-	}
+	// mobile menu
+	buildNavMenu(document.getElementById('mobile-nav'));
+	buildNavArticle(document.getElementById('mobile-nav'));
+	buildBannerSite(document.getElementById('mobile-sidelist'));
+	buildBanners(document.getElementById('mobile-sidelist'));
 
-	for (var i = 0; i < side.menu.length; i++) {
-		link = document.createElement("a");
-		link.href = side.menu[i].href;
-		link.classList.add(side.menu[i].color);
-		link.innerHTML = side.menu[i].text;
-		nav.appendChild(link);
-	}
-
-	for (var i = 0; i < side.banners.length; i++) {
-		var sidelist = document.getElementById("sidelist");
-		link = document.createElement("a");
-		link.style.backgroundImage = 'url("' + side.banners[i].back + '")';
-		link.style.paddingTop = (side.banners[i].height / side.banners[i].width * 100) + '%';
-		link.href = side.banners[i].href;
-		sidelist.appendChild(link);
-	}
-
-	var nav2 = document.getElementById("nav2");
-
-	for (var i = 0; i < side.issues.length; i++) {
-		link = document.createElement("a");
-		link.href = side.issues[i].href;
-		link.style.backgroundImage = 'url("' + side.issues[i].back + '")';
-		link.target = "_blank";
-		nav2.parentNode.insertBefore(link, nav2);
-	}
-
-	for (var i = 0; i < side.menu.length; i++) {
-		link = document.createElement("a");
-		link.href = side.menu[i].href;
-		link.classList.add(side.menu[i].color);
-		link.innerHTML = side.menu[i].text;
-		nav2.appendChild(link);
-	}
-
-	for (var i = 0; i < side.banners.length; i++) {
-		var sidelist2 = document.getElementById("sidelist2");
-		link = document.createElement("a");
-		link.style.backgroundImage = 'url("' + side.banners[i].back + '")';
-		link.style.paddingTop = (side.banners[i].height / side.banners[i].width * 100) + '%';
-		link.href = side.banners[i].href;
-		sidelist2.appendChild(link);
-	}
-
+	// content
 	buildContent();
+
+	function buildBannerSite(selector) {
+		var link = document.createElement("a");
+		var linkText = document.createElement('div');
+		linkText.innerHTML = side.bannerSite.text;
+		link.appendChild(linkText);
+		link.href = side.bannerSite.href;
+		link.classList.add(side.bannerSite.color);
+		link.classList.add('menu-site-banner');
+		link.target = "_blank";
+		selector.parentNode.insertBefore(link, selector);
+	}
+
+	function buildNavArticle(selector) {
+		for (var i = 0; i < side.issues.length; i++) {
+			var link = document.createElement("a");
+			var linkText = document.createElement('div');
+			linkText.innerHTML = side.articles[i].text;
+			link.appendChild(linkText);
+			link.href = side.articles[i].href;
+			link.classList.add(side.articles[i].color);
+			link.classList.add('menu-article');
+			link.target = "_blank";
+			selector.parentNode.insertBefore(link, selector);
+		}
+	}
+
+	function buildNavMenu(selector) {
+		for (var i = 0; i < side.menu.length; i++) {
+			var link = document.createElement("a");
+			link.href = side.menu[i].href;
+			link.classList.add(side.menu[i].color);
+			link.innerHTML = side.menu[i].text;
+			selector.appendChild(link);
+		}
+	}
+
+	function buildIssues(selector) {
+		for (var i = 0; i < side.issues.length; i++) {
+			var link = document.createElement("a");
+			link.href = side.issues[i].href;
+			link.style.backgroundImage = 'url("' + side.issues[i].back + '")';
+			link.target = "_blank";
+			link.classList.add('menu-issues');
+			selector.parentNode.insertBefore(link, selector.nextSibling);
+		}
+	}
+
+	function buildBanners(selector) {
+		for (var i = 0; i < side.banners.length; i++) {
+			var link = document.createElement("a");
+			link.style.backgroundImage = 'url("' + side.banners[i].back + '")';
+			link.style.paddingTop = (side.banners[i].height / side.banners[i].width * 100) + '%';
+			link.href = side.banners[i].href;
+			selector.appendChild(link);
+		}
+	}
 
 	</script>
 	<script src="/js/axios.min.js"></script>

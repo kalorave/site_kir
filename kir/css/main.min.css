@@ -152,8 +152,7 @@ header .wrap {
   transition: all 0.15s linear;
 }
 
-#logo a:hover,
-#logo a:focus {
+#logo a:hover, #logo a:focus {
   background-color: rgba(0, 0, 0, 0.34);
 }
 
@@ -168,7 +167,7 @@ header .wrap {
   margin: 0 0.25rem 0 auto;
   white-space: nowrap;
   /* line-height: 0;
-  text-indent: 9999px; */
+    text-indent: 9999px; */
   overflow: hidden;
   background-image: url("/img/head.png");
   background-position: center right;
@@ -216,19 +215,19 @@ header .wrap {
   margin-left: 0.5rem;
 }
 
-.mobile-menu {
+.mobile-menu-container {
   display: none;
   position: relative;
 }
 
-.open-btn {
+.mobile-menu-container .open-btn {
   height: 100%;
   width: 60px;
   margin-right: 0.25rem;
   overflow: hidden;
 }
 
-.icon-wrap {
+.mobile-menu-container .icon-wrap {
   height: 100%;
   display: flex;
   justify-content: center;
@@ -239,11 +238,11 @@ header .wrap {
   transition: all 0.15s linear;
 }
 
-.icon-wrap:hover {
+.mobile-menu-container .icon-wrap:hover {
   background-color: rgba(0, 0, 0, 0.34);
 }
 
-.mobile-menu .icon-wrap > span {
+.mobile-menu-container .icon-wrap > span {
   display: block;
   width: 60%;
   margin-bottom: 3px;
@@ -254,23 +253,7 @@ header .wrap {
   transition: all 0.15s linear;
 }
 
-.mobile-menu.active .icon-wrap > span:nth-child(1) {
-  transform: rotate(45deg);
-  margin-top: -5px;
-  margin-bottom: -5px;
-}
-
-.mobile-menu.active .icon-wrap > span:nth-child(2) {
-  transform: scale(0);
-}
-
-.mobile-menu.active .icon-wrap > span:nth-child(3) {
-  transform: rotate(-45deg);
-  margin-top: -5px;
-  margin-bottom: -5px;
-}
-
-.menu-background {
+.mobile-menu-container .menu-background {
   position: absolute;
   width: 100vw;
   height: 100vh;
@@ -282,12 +265,7 @@ header .wrap {
   opacity: 0;
 }
 
-.mobile-menu.active .menu-background {
-  left: -100vw;
-  opacity: 1;
-}
-
-.mobile-menu .mobile-nav-wrap {
+.mobile-menu-container .mobile-nav-wrap {
   padding: 0 0.5rem;
   max-width: 320px;
   height: calc(100vh - 50px);
@@ -303,39 +281,53 @@ header .wrap {
   right: -320px;
 }
 
-.mobile-menu.active .mobile-nav-wrap {
+.mobile-menu-container .mobile-nav-wrap a {
+  transition: all 0.15s linear;
+}
+
+.mobile-menu-container .mobile-nav-wrap a:hover {
+  box-shadow: 0 0 0.5rem #333;
+}
+
+.mobile-menu-container .mobile-nav-wrap .ya-site-form__search-input {
+  padding: 0.5rem 0 1rem 0 !important;
+}
+
+.mobile-menu-container .mobile-nav-wrap input {
+  padding: 0.5rem;
+}
+
+.mobile-menu-container .mobile-nav-wrap .ya-site-form__input-text {
+  border: none !important;
+}
+
+.mobile-menu-container.active .icon-wrap > span:nth-child(1) {
+  transform: rotate(45deg);
+  margin-top: -5px;
+  margin-bottom: -5px;
+}
+
+.mobile-menu-container.active .icon-wrap > span:nth-child(2) {
+  transform: scale(0);
+}
+
+.mobile-menu-container.active .icon-wrap > span:nth-child(3) {
+  transform: rotate(-45deg);
+  margin-top: -5px;
+  margin-bottom: -5px;
+}
+
+.mobile-menu-container.active .menu-background {
+  left: -100vw;
+  opacity: 1;
+}
+
+.mobile-menu-container.active .mobile-nav-wrap {
   transition: all 0.15s linear;
   right: 0;
 }
 
-.mobile-nav-wrap a,
-.mobile-nav-wrap .cell {
-  transition: all 0.15s linear;
-}
-
-.mobile-nav-wrap a:hover,
-.mobile-nav-wrap .cell > a:hover,
-a.home:hover {
-  box-shadow: 0 0 0.5rem #333;
-}
-
-.mobile-nav-wrap .cell a:last-child {
-  margin-bottom: 2.5rem;
-}
-
-.mobile-nav-wrap .ya-site-form__search-input {
-  padding: 0.5rem 0 1rem 0 !important;
-}
-
-.mobile-nav-wrap * input {
-  padding: 0.5rem;
-}
-
-.mobile-nav-wrap .ya-site-form__input-text {
-  border: none !important;
-}
-
-#nav a, #nav2 a {
+#aside-nav a, #mobile-nav a {
   font-size: 1.75rem;
   height: 3.571rem;
   margin-bottom: 0.5rem;
@@ -344,26 +336,30 @@ a.home:hover {
   align-items: center;
 }
 
-#sidelist, #sidelist2 {
+#aside-nav a:last-child, #mobile-nav a:last-child {
+  margin-bottom: 0;
+}
+
+#mobile-sidelist, #aside-sidelist {
   flex-grow: 1;
 }
 
-#sidelist a, #sidelist2 a {
+#mobile-sidelist a, #aside-sidelist a {
   display: block;
   margin-bottom: 0.5rem;
   background-size: cover;
 }
 
-#sidelist a:last-child, #sidelist2 a:last-child {
+#mobile-sidelist a:last-child, #aside-sidelist a:last-child {
   position: sticky;
   top: 5rem;
 }
 
-#menu a, #content a {
+#aside-menu a, #content a {
   transition: all 0.3s ease;
 }
 
-#menu a:hover,
+#aside-menu a:hover,
 #content .cell > a:hover,
 a.home:hover {
   box-shadow: 0 0 0.5rem #333;
@@ -371,6 +367,14 @@ a.home:hover {
 
 #content {
   max-width: 54rem;
+}
+
+#content > h2 {
+  line-height: 1;
+  margin: 0 0.25rem 0.5rem;
+  font-size: 2rem;
+  text-align: center;
+  padding: 1rem;
 }
 
 #content .cell {
@@ -386,13 +390,13 @@ a.home:hover {
   display: block;
 }
 
-.cell .back {
+#content .cell .back {
   padding-top: 17.5rem;
   background-size: cover;
   background-position: center;
 }
 
-.cell .text {
+#content .cell .text {
   height: 10.5rem;
   font-size: 1.5rem;
   padding: 0.5rem;
@@ -402,7 +406,7 @@ a.home:hover {
   text-align: center;
 }
 
-.cell .text span {
+#content .cell .back span, #content .cell .text span {
   margin: auto;
 }
 
@@ -423,33 +427,44 @@ a.home:hover {
   color: #ccc;
 }
 
-#content > h2 {
-  line-height: 1;
-  margin: 0 0.25rem 0.5rem;
-  font-size: 2rem;
-  text-align: center;
-  padding: 1rem;
-}
-
-#menu {
+#aside-menu {
   width: 20.5rem;
   display: flex;
   flex-direction: column;
 }
 
-#menu > * {
+#aside-menu > * {
   margin-top: 0.5rem;
 }
 
-#menu > *:first-child {
+#aside-menu > *:first-child {
   margin-top: 0;
 }
 
-#menu > a {
+#aside-menu > a {
   display: block;
   padding-top: 140%;
   background-size: cover;
   background-position: center;
+}
+
+#aside-menu .menu-article, #aside-menu .menu-site-banner, #mobile-menu .menu-article, #mobile-menu .menu-site-banner {
+  display: block;
+  font-size: 1.75rem;
+  padding-top: 140%;
+  position: relative;
+}
+
+#aside-menu .menu-article > div, #aside-menu .menu-site-banner > div, #mobile-menu .menu-article > div, #mobile-menu .menu-site-banner > div {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+#aside-menu#mobile-menu .menu-article, #aside-menu#mobile-menu .menu-site-banner, #mobile-menu#mobile-menu .menu-article, #mobile-menu#mobile-menu .menu-site-banner {
+  margin: 0.5rem 0;
 }
 
 #contacts-wrap .contacts-card-item {
@@ -533,35 +548,34 @@ a.home:hover {
     width: 33.333%;
     min-width: 200px;
   }
-  .mobile-menu {
+  #aside-nav,
+  #aside-sidelist,
+  .desktop-menu,
+  #aside-menu .menu-article,
+  #aside-menu .menu-site-banner {
+    display: none !important;
+  }
+  .mobile-menu-container {
     display: block;
-  }
-  .desktop-menu {
-    display: none !important;
-  }
-  #nav, #sidelist {
-    display: none !important;
   }
   .main-content {
     flex-direction: column;
   }
-  #menu {
+  #aside-menu {
     flex-direction: row;
     justify-content: center;
     margin: 0 auto;
     width: 100%;
     max-width: 54rem;
   }
-  #menu > a {
-    margin-bottom: 0.5rem;
+  #aside-menu > a {
     width: 50%;
     max-width: 306px;
     padding-top: 428.4px;
-    margin: 0 0 0.5rem 0;
+    margin: 0 0.25rem 0.5rem 0.25rem;
   }
-  #menu > a {
-    margin-right: 0.25rem;
-    margin-left: 0.25rem;
+  #aside-menu > a .menu-issues {
+    margin-top: 0;
   }
   #content {
     margin: 0 auto;
@@ -574,19 +588,20 @@ a.home:hover {
   header .wrap {
     max-width: 54.5rem;
   }
-  #content .cell,
-  #content .cell.c-2 {
+  #content {
+    padding: 0;
+  }
+  #content .cell, #content .cell.c-2 {
     width: 50%;
   }
-  #menu > a {
+  #aside-menu > a {
     margin-right: 0.25rem;
     margin-left: 0.25rem;
     width: 50%;
     max-width: none;
     padding-top: 70%;
   }
-  #menu.cell,
-  #content {
+  #aside-menu.cell {
     padding: 0;
   }
   .cell .back {
@@ -601,11 +616,13 @@ a.home:hover {
   #logo {
     padding-left: 0.25rem;
   }
-  #menu {
+  #aside-menu {
     padding-right: 0.25rem;
     padding-left: 0.25rem;
+    flex-direction: column !important;
+    align-items: center;
   }
-  #menu > a {
+  #aside-menu > a {
     width: 100%;
     max-width: 25.666rem;
     padding-top: 428.4px;
@@ -614,27 +631,13 @@ a.home:hover {
   #content {
     margin: 0 auto;
   }
-  #content .cell,
-  #content .cell.c-2 {
+  #content .cell, #content .cell.c-2 {
     max-width: 29rem;
     width: 25.666rem;
     margin: 0 auto;
   }
   .main-content {
     min-width: 26.666rem;
-  }
-  #menu {
-    flex-direction: column !important;
-    align-items: center;
-  }
-  #menu > a {
-    margin-right: 0.25rem;
-    margin-left: 0.25rem;
-    margin-bottom: 0;
-    margin-top: 0.5rem;
-  }
-  #menu > a:first-child {
-    margin-top: 0;
   }
   .cell {
     padding-right: 0rem;
